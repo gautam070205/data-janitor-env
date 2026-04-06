@@ -8,6 +8,10 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 import json
 import os
 import sys
+
+# Add parent directory to path to import modules
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from env import DataJanitorEnv
 from tasks import grade_easy_task, grade_medium_task, grade_hard_task
 
