@@ -1,3 +1,7 @@
+# Environment Variables
+.env
+.env.local
+
 # Virtual Environment
 venv/
 env/
@@ -28,6 +32,11 @@ Thumbs.db
 *.db
 *.sqlite
 *.sqlite3
+
+# Environment Variables (NEVER commit credentials!)
+.env
+.env.local
+.env.*.local
 output.db
 *.tmp
 

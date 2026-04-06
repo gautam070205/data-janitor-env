@@ -150,16 +150,48 @@ Reward: +1.00
 
 ---
 
-#### 🚀 `inference.py` (Optional: Real LLM Agent)
-**Purpose**: Test with real GPT-4 (requires `OPENAI_API_KEY` env var).
+#### 🚀 `inference.py` (Real LLM Agent)
+**Purpose**: Test with real LLM (GPT-4, Claude, or custom OpenAI-compatible endpoint).
+
+**Environment Variables (REQUIRED)**:
+```bash
+HF_TOKEN=hf_...                              # Hugging Face token OR
+OPENAI_API_KEY=sk_...                        # OpenAI API key
+
+API_BASE_URL=https://api.openai.com/v1       # Optional, LLM endpoint (default: OpenAI)
+MODEL_NAME=gpt-4                             # Optional, model name (default: gpt-4)
+```
+
+**Structured Logging Format**:
+Inference script emits structured logs for evaluation:
+```
+[START] {task_level}
+[STEP] {step_num} {action_type} reward={reward:.3f} score={score:.3f}
+[STEP] {step_num} error {error_type}
+[END] {task_level} score={final_score:.3f} steps={step_num}
+```
 
 **How it works**:
-- Initialize AsyncOpenAI client
+- Reads environment variables (API_BASE_URL, MODEL_NAME, HF_TOKEN/OPENAI_API_KEY)
+- Creates configurable AsyncOpenAI client (supports custom endpoints)
 - System prompt tells LLM to respond with JSON only
-- Loop: Send task to GPT-4 → parse JSON → execute action → add results to conversation
-- Handles API errors gracefully
+- Loop: Send task observation → parse JSON → execute action → add results to conversation
+- Emits structured logs on stdout for validator parsing
 
-**Note**: Mock agent is primary; inference.py is optional extension.
+**Setup**:
+```bash
+# Copy example config
+cp .env.example .env
+
+# Edit .env with your credentials
+# HF_TOKEN=hf_your_token_here
+# or OPENAI_API_KEY=sk_your_key_here
+
+# Run inference
+python inference.py
+```
+
+**Note**: Mock agent is primary (no API key needed); inference.py is optional for real LLM testing.
 
 ---
 
