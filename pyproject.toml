@@ -30,7 +30,7 @@ dev = [
 ]
 
 [tool.setuptools]
-packages = ["data_janitor"]
+packages = ["server"]
 
 [project.scripts]
 server = "server.app:main"
