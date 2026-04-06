@@ -23,4 +23,4 @@ ENV OPENAI_API_KEY=""
 RUN python -c "from models import DataJanitorAction, DataJanitorObservation, EnvResponse; from env import DataJanitorEnv; from tasks import grade_easy_task, grade_medium_task, grade_hard_task; print('✅ All modules imported successfully')"
 
 # Default command: run mock agent (no API key required)
-CMD ["python", "-m", "asyncio", "mock_agent.py"]
+CMD ["python", "mock_agent.py"]
