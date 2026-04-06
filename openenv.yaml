@@ -1,0 +1,48 @@
+name: DataJanitorEnv
+version: "1.0.0"
+description: AI agent environment for cleaning messy data and loading into SQLite databases
+author: Meta Hack Team
+
+tasks:
+  - name: easy
+    description: Load 10 users from CSV into SQLite 'users' table with columns id, name, email
+    max_steps: 10
+    difficulty: easy
+    
+  - name: medium
+    description: Clean 20 sales records with mixed date formats and standardize all dates to YYYY-MM-DD format in 'clean_sales' table
+    max_steps: 15
+    difficulty: medium
+    
+  - name: hard
+    description: Calculate lifetime value (LTV) for marketing opt-in users by merging users.json and purchases.csv, then save results to 'ltv_report' table
+    max_steps: 20
+    difficulty: hard
+
+environment:
+  python_version: "3.10"
+  framework: "custom_sandbox_with_subprocess"
+  timeout_seconds: 30
+  database: "sqlite"
+  database_name: "output.db"
+
+action_space:
+  type: json
+  allowed_fields:
+    - action_type
+    - python_code
+    - file_path
+
+observation_space:
+  type: json
+  fields:
+    - task_description
+    - stdout
+    - stderr
+    - files_in_workspace
+    - database_info
+    - current_score
+
+reward_strategy: "delta_scoring"
+reward_range: [0.0, 1.0]
+final_success_threshold: 0.99
