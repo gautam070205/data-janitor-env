@@ -127,8 +127,12 @@ class OpenEnvHandler(BaseHTTPRequestHandler):
         """Suppress default logging"""
         pass
 
-if __name__ == "__main__":
+def main() -> None:
     port = int(os.getenv("PORT", 7860))
     server = HTTPServer(("0.0.0.0", port), OpenEnvHandler)
     print(f"✅ OpenEnv API server running on port {port}")
     server.serve_forever()
+
+
+if __name__ == "__main__":
+    main()
