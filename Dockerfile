@@ -22,5 +22,8 @@ ENV OPENAI_API_KEY=""
 # Health check - verify imports work
 RUN python -c "from models import DataJanitorAction, DataJanitorObservation, EnvResponse; from env import DataJanitorEnv; from tasks import grade_easy_task, grade_medium_task, grade_hard_task; print('✅ All modules imported successfully')"
 
-# Default command: run mock agent (no API key required)
-CMD ["python", "mock_agent.py"]
+# Expose port for HF Spaces
+EXPOSE 7860
+
+# Default command: run web server on port 7860
+CMD ["python", "-m", "http.server", "7860"]

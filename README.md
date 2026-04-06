@@ -1,3 +1,12 @@
+---
+title: Data Janitor Environment
+emoji: 🧹
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+pinned: false
+---
+
 # Data Janitor Environment 🧹
 
 A complete, production-grade local Python environment for training AI agents to clean messy data and perform data engineering tasks. The system generates progressive tasks (Easy, Medium, Hard) with deterministic grading, allowing agents to learn incrementally through **delta rewards** (score improvements). Perfect for testing data cleaning logic **without needing Docker or API dependencies** (except optional GPT-4).
