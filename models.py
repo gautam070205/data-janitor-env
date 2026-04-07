@@ -33,6 +33,7 @@ class DataJanitorObservation(BaseModel):
     stderr: str = Field("", description="Standard error from the last action")
     files_in_workspace: List[str] = Field(default_factory=list, description="List of files in the workspace")
     database_info: Dict[str, Any] = Field(default_factory=dict, description="Information about the database state")
+    current_score: float = Field(0.001, description="Current task score strictly between 0 and 1")
 
 
 class EnvResponse(BaseModel):

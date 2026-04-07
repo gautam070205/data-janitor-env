@@ -19,7 +19,7 @@ class DataJanitorEnv:
         self.max_steps = max_steps
         self.workspace: Optional[str] = None
         self.db_path: Optional[str] = None
-        self.previous_score = 0.0
+        self.previous_score = 0.001
         self.current_step = 0
         self.task_desc = ""
 
@@ -43,16 +43,17 @@ class DataJanitorEnv:
             self._generate_hard_data()
             self.task_desc = "Calculate lifetime value (LTV) for users who opted into marketing. Filter users from users.json, merge with purchases.csv, group by user_id and sum amounts. Save to 'ltv_report' table."
         
-        self.previous_score = 0.0
+        self.previous_score = 0.001
         self.current_step = 0
         
         observation = DataJanitorObservation(
             task_description=self.task_desc,
             files_in_workspace=self._list_files(),
-            database_info=self._get_db_info()
+            database_info=self._get_db_info(),
+            current_score=0.001
         )
         
-        return EnvResponse(observation=observation, reward=0.0, done=False)
+        return EnvResponse(observation=observation, reward=0.001, done=False)
 
     def _generate_easy_data(self):
         users_data = [
@@ -155,7 +156,8 @@ class DataJanitorEnv:
             stdout=stdout,
             stderr=stderr,
             files_in_workspace=self._list_files(),
-            database_info=self._get_db_info()
+            database_info=self._get_db_info(),
+            current_score=current_score
         )
         
         return EnvResponse(observation=observation, reward=reward, done=done)
@@ -181,7 +183,7 @@ class DataJanitorEnv:
 
     def _get_current_score(self) -> float:
         if not os.path.exists(self.db_path):
-            return 0.0
+            return 0.001
         
         if self.task_level == "easy":
             score, _ = grade_easy_task(self.db_path)
@@ -190,7 +192,7 @@ class DataJanitorEnv:
         elif self.task_level == "hard":
             score, _ = grade_hard_task(self.db_path)
         else:
-            score = 0.0
+            score = 0.001
         
         return score
 
